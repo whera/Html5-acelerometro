@@ -40,7 +40,7 @@ class Chat implements MessageComponentInterface
 
         echo "New connection! ({$conn->resourceId})" . PHP_EOL;
 
-        //$conn->send(json_encode(['type' => 'connection', 'id' => $conn->resourceId]));
+        $conn->send(json_encode(['type' => 'connection', 'id' => $conn->resourceId]));
     }
 
     /**

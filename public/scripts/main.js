@@ -13,17 +13,33 @@
     var beta = null;
     var gamma = null;
 
-    var conn = new WebSocket('ws://172.22.3.63:6080');
+    var conn = new WebSocket('ws://172.22.3.26:6080');
+    var md = new MobileDetect(window.navigator.userAgent);
+
+    if (md.mobile()) {
+        document.querySelector('.empty').style.visibility = 'hidden';
+    }
 
     conn.onmessage = function(e) {
         var event = JSON.parse(e.data);
+
+        if (typeof event.type !== "undefined") {
+            console.log(event.id);
+            var img = document.createElement('img');
+            img.src = 'https://chart.googleapis.com/chart?cht=qr&chl='+event.id+'&chs=250x250&chld=L|0';
+            img.className = 'center';
+            document.getElementById('qrcode').appendChild(img);
+
+            return true;
+        }
+
+
         moveElement(event);
     };
 
 
     
     function handleOrientation(event) {
-        var md = new MobileDetect(window.navigator.userAgent);
 
         if (md.mobile()) {
 
